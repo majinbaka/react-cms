@@ -1,3 +1,4 @@
+import { Config } from '@app/config/cms.config';
 import { ThemeType } from '@app/interfaces/interfaces';
 import { createSlice, createAction, PrepareAction } from '@reduxjs/toolkit';
 
@@ -5,7 +6,7 @@ interface ThemeState {
   theme: ThemeType;
 }
 
-export const defaultTheme = (localStorage.getItem('theme') as ThemeType) || 'dark';
+export const defaultTheme = (localStorage.getItem('theme') as ThemeType) || Config.defaultTheme;
 
 localStorage.setItem('theme', defaultTheme);
 

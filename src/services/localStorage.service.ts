@@ -39,6 +39,14 @@ export const readToken = (): string => {
   return Config.storageDefaut.getItem('accessToken') || 'bearerToken';
 };
 
+export const persistRefreshToken = (token: string): void => {
+  Config.storageDefaut.setItem('refreshToken', token);
+};
+
+export const readRefreshToken = (): string => {
+  return Config.storageDefaut.getItem('refreshToken') || '';
+};
+
 export const persistUser = (user: UserModel): void => {
   Config.storageDefaut.setItem('user', JSON.stringify(user));
 };
@@ -49,5 +57,6 @@ export const readUser = (): UserModel | null => {
   return userStr ? JSON.parse(userStr) : testUser;
 };
 
+export const deleteRefreshToken = (): void => Config.storageDefaut.removeItem('refreshToken');
 export const deleteToken = (): void => Config.storageDefaut.removeItem('accessToken');
 export const deleteUser = (): void => Config.storageDefaut.removeItem('user');

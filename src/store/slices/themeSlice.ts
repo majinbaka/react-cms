@@ -6,16 +6,16 @@ interface ThemeState {
   theme: ThemeType;
 }
 
-export const defaultTheme = (localStorage.getItem('theme') as ThemeType) || Config.defaultTheme;
+export const defaultTheme = (Config.storageDefaut.getItem('theme') as ThemeType) || Config.defaultTheme;
 
-localStorage.setItem('theme', defaultTheme);
+Config.storageDefaut.setItem('theme', defaultTheme);
 
 const initialState: ThemeState = {
   theme: defaultTheme,
 };
 
 export const setTheme = createAction<PrepareAction<ThemeType>>('theme/setTheme', (theme: ThemeType) => {
-  localStorage.setItem('theme', theme);
+  Config.storageDefaut.setItem('theme', theme);
   return {
     payload: theme,
   };

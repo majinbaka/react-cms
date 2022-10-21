@@ -4,7 +4,7 @@ import { LanguageType } from '@app/interfaces/interfaces';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const localLanguage = (localStorage.getItem('lng') as LanguageType) || Config.language;
+const localLanguage = (Config.storageDefaut.getItem('lng') as LanguageType) || Config.language;
 
 export const useLanguage = (): { language: LanguageType; setLanguage: (locale: LanguageType) => Promise<void> } => {
   const { i18n } = useTranslation();
@@ -12,7 +12,7 @@ export const useLanguage = (): { language: LanguageType; setLanguage: (locale: L
   const handleChangeLanguage = useCallback(
     async (locale: LanguageType) => {
       Dates.setLocale(locale);
-      localStorage.setItem('lng', locale);
+      Config.storageDefaut.setItem('lng', locale);
       await i18n.changeLanguage(locale);
     },
     [i18n],

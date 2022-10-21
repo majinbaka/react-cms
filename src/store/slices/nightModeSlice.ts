@@ -1,3 +1,4 @@
+import { Config } from '@app/config/cms.config';
 import { createAction, createSlice, PrepareAction } from '@reduxjs/toolkit';
 
 const DEFAULT_NIGHT_MODE_INTERVAL = [20 * 3600 * 1000, 8 * 3600 * 1000];
@@ -7,15 +8,15 @@ interface NightModeState {
   nightTime: number[];
 }
 
-const currentNightTimeJSON = localStorage.getItem('nightTime');
+const currentNightTimeJSON = Config.storageDefaut.getItem('nightTime');
 const currentNightTime: number[] = currentNightTimeJSON
   ? (JSON.parse(currentNightTimeJSON) as number[])
   : DEFAULT_NIGHT_MODE_INTERVAL;
 
-const isNightMode = localStorage.getItem('nightMode') === 'true';
+const isNightMode = Config.storageDefaut.getItem('nightMode') === 'true';
 
-localStorage.setItem('nightTime', JSON.stringify(currentNightTime));
-localStorage.setItem('nightMode', JSON.stringify(isNightMode));
+Config.storageDefaut.setItem('nightTime', JSON.stringify(currentNightTime));
+Config.storageDefaut.setItem('nightMode', JSON.stringify(isNightMode));
 
 const initialState: NightModeState = {
   isNightMode,
@@ -23,7 +24,7 @@ const initialState: NightModeState = {
 };
 
 export const setNightMode = createAction<PrepareAction<boolean>>('nightMode/setNightMode', (isNightMode) => {
-  localStorage.setItem('nightMode', JSON.stringify(isNightMode));
+  Config.storageDefaut.setItem('nightMode', JSON.stringify(isNightMode));
 
   return {
     payload: isNightMode,
@@ -31,7 +32,7 @@ export const setNightMode = createAction<PrepareAction<boolean>>('nightMode/setN
 });
 
 export const setNightTime = createAction<PrepareAction<number[]>>('nightMode/setNightTime', (nightTime) => {
-  localStorage.setItem('nightTime', JSON.stringify(nightTime));
+  Config.storageDefaut.setItem('nightTime', JSON.stringify(nightTime));
 
   return {
     payload: nightTime,

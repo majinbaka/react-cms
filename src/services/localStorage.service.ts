@@ -1,3 +1,4 @@
+import { Config } from '@app/config/cms.config';
 import { UserModel } from '@app/domain/UserModel';
 const avatarImg = process.env.REACT_APP_ASSETS_BUCKET + '/avatars/avatar5.webp';
 
@@ -31,22 +32,22 @@ const testUser = {
 };
 
 export const persistToken = (token: string): void => {
-  localStorage.setItem('accessToken', token);
+  Config.storageDefaut.setItem('accessToken', token);
 };
 
 export const readToken = (): string => {
-  return localStorage.getItem('accessToken') || 'bearerToken';
+  return Config.storageDefaut.getItem('accessToken') || 'bearerToken';
 };
 
 export const persistUser = (user: UserModel): void => {
-  localStorage.setItem('user', JSON.stringify(user));
+  Config.storageDefaut.setItem('user', JSON.stringify(user));
 };
 
 export const readUser = (): UserModel | null => {
-  const userStr = localStorage.getItem('user');
+  const userStr = Config.storageDefaut.getItem('user');
 
   return userStr ? JSON.parse(userStr) : testUser;
 };
 
-export const deleteToken = (): void => localStorage.removeItem('accessToken');
-export const deleteUser = (): void => localStorage.removeItem('user');
+export const deleteToken = (): void => Config.storageDefaut.removeItem('accessToken');
+export const deleteUser = (): void => Config.storageDefaut.removeItem('user');

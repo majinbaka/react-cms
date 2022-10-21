@@ -1,12 +1,21 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from '@app/hooks/reduxHooks';
-import { WithChildrenProps } from '@app/types/generalTypes';
+import Error404Page from '@app/pages/Error404Page';
 
-const RequireAuth: React.FC<WithChildrenProps> = ({ children }) => {
+export const RequireAuth = ({ children, roles }: { children: JSX.Element; roles: Array<any> }) => {
+  const location = useLocation();
   const token = useAppSelector((state) => state.auth.token);
+  const user = useAppSelector((state) => state.user.user);
 
-  return token ? <>{children}</> : <Navigate to="/auth/login" replace />;
+  const userHasRequiredRole = token && user && roles.includes(user?.role) ? true : false;
+
+  if (!token) {
+    return <Navigate to={`auth/login`} state={{ from: location }} />;
+  }
+
+  if (token && !userHasRequiredRole) {
+    return <Error404Page />;
+  }
+
+  return children;
 };
-
-export default RequireAuth;

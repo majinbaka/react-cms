@@ -21,6 +21,7 @@ export interface UserModel {
   address2?: string;
   zipcode: number;
   website?: string;
+  role?: string;
   socials?: {
     twitter?: string;
     facebook?: string;

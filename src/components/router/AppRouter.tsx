@@ -122,7 +122,7 @@ const LogoutFallback = withLoading(Logout);
 
 export const AppRouter: React.FC = () => {
   const protectedLayout = (
-    <RequireAuth>
+    <RequireAuth roles={[]}>
       <MainLayout />
     </RequireAuth>
   );
@@ -192,7 +192,7 @@ export const AppRouter: React.FC = () => {
           <Route
             path="lock"
             element={
-              <RequireAuth>
+              <RequireAuth roles={[]}>
                 <LockPage />
               </RequireAuth>
             }
